@@ -127,6 +127,7 @@ public class WindowUser extends Application {
 
                 setting.maxKOLSelected = Integer.parseInt(maxKOLField.getText());
                 showMessage("Ghi nhận Setting này!");
+                setting.saveProgress();
             } catch (NumberFormatException ex) {
                 showMessage("Nhập số lượng KOL hợp lệ.");
             }
@@ -137,11 +138,9 @@ public class WindowUser extends Application {
                 showMessage("Hãy lưu cài đặt trước khi thực hiện bước này.");
                 return;
             }
-            if(setting.isTask1Completed) {
-                showMessage("Bước này đã hoàn thành");
-            }
-            else runTask1();
+            if(!setting.isTask1Completed) runTask1();
             displayData(filteringKOL.getOutputFilePath(), resultsBox, "Follower", Integer.class);
+            showMessage("Đã hoàn thành tìm kiếm KOL");
         });
         Label parametersLabel = new Label("Nhập dữ liệu");
         parametersLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
@@ -205,6 +204,7 @@ public class WindowUser extends Application {
                 setting.maxPostRetrievedPerUser = Integer.parseInt(maxTweetsField.getText());
                 setting.maxComments = Integer.parseInt(maxCommentsField.getText());
                 setting.maxReposter = Integer.parseInt(maxReposterField.getText());
+                setting.saveProgress();
                 showMessage("Ghi nhận Setting này!");
             } catch (NumberFormatException ex) {
                 showMessage("Nhập các tham số hợp lệ.");
@@ -220,11 +220,9 @@ public class WindowUser extends Application {
             if (!setting.isTask1Completed) {
                 showMessage("Hãy thực hiện bước 1 trước khi chuyển sang bước 2.");
             } else {
-                if(setting.isTask2Completed) {
-                    showMessage("Bước này đã hoàn thành. Kết quả được lưu tại rank.json");
-                }
-                else runTask2();
+                if(!setting.isTask2Completed) runTask2();
                 displayData("rank.json", step2ResultsBox, "PageRank" , Double.class);
+                showMessage("Bước này đã hoàn thành. Kết quả được lưu tại rank.json");
             }
         });
         Label parametersLabel = new Label("Nhập dữ liệu");
@@ -249,11 +247,11 @@ public class WindowUser extends Application {
 
         return section;
     }
-
+    
     private void runTask1() {
         try {
             Main.runTask1(setting.hashtags, setting.maxKOLSelected);
-            showMessage("Hoàn thành Tìm Kiếm KOL!");
+            setting.isTask1Completed = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             showMessage("Xuất hiện lỗi khi thực hiện chương trình.");
@@ -263,7 +261,7 @@ public class WindowUser extends Application {
     private void runTask2() {
         try {
             Main.runTask2(setting.maxPostRetrievedPerUser, setting.maxComments, setting.maxReposter);
-            showMessage("Hoàn thành chương trình!");
+            setting.isTask2Completed = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             showMessage("Xuất hiện lỗi khi thực hiện chương trình.");
