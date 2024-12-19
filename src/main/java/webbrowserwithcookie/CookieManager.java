@@ -83,12 +83,7 @@ public class CookieManager {
 
     public static void main(String[] args) {
         String[][] accounts = {
-            {"atuan.nh2810@gmail.com", "@TunAnh266448398", "Appu28105!"},
-            {},
-            {},
-            {},
-            {},
-            {}
+          
         };
         int i = 0;
         for (String[] account : accounts) {
