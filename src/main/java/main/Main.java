@@ -80,6 +80,7 @@ public class Main {
         setting.saveState(); // Save the state
         setting.saveProgress(); // Save progress
         System.out.println("Task1 completed.");
+        setting.loadProgress();
     }
 
     // Run Task 2
