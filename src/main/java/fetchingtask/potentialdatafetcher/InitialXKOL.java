@@ -88,7 +88,7 @@ public class InitialXKOL implements InitialKOL {
 		driver.get("https://x.com/search?q=" + hashtag + "&src=typed_query&f=user");
 
 		while (checkpoint <= hashtags.size() - 1) {
-			if ((preSize == links.size() && !links.isEmpty()) || scroll_count == 2) {
+			if ((preSize == links.size() && !links.isEmpty()) || scroll_count == 40) {
 				System.out.println("Thực hiện: " + scroll_count + " lượt vuốt");
 				scroll_count = 0;
 				KOLs_count = links.size();
