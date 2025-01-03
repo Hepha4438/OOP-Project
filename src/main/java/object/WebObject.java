@@ -8,7 +8,6 @@ public abstract class WebObject {
 
 	public WebObject() {
 		this.link = "";
-
 	}
 
 	public void setLink(String s) {

@@ -11,10 +11,6 @@ import com.google.gson.reflect.TypeToken;
 
 import object.KOL;
 import object.Tweet;
-import fetchingtask.potentialdatafetcher.FilteringXKOL;
-
-import fetchingtask.kolinfofetcher.FindingXFollowerAndXFollowing;
-import fetchingtask.kolinfofetcher.FindingTweet;
 
 import static filemanager.FileManager.loadFile;
 import static filemanager.FileManager.saveFile;
@@ -35,7 +31,7 @@ public class XPageRankAlgorithm implements Algorithm {
 
 	@Override
 	public Map<String, Double> algorithmImplementation() {
-		Map<String, Integer> userLinks = loadFile(FilteringXKOL.outputFilePath, new TypeToken<Map<String, Integer>>() {
+		Map<String, Integer> userLinks = loadFile("FilteringXKOL.json", new TypeToken<Map<String, Integer>>() {
 		}.getType());
 		Set<String> userLinksSet = userLinks.keySet();
 		List<String> kolList = new ArrayList<>(userLinksSet);
@@ -97,8 +93,8 @@ public class XPageRankAlgorithm implements Algorithm {
 		KOLGraphMaker builtGraph = new KOLGraphMaker();
 		XPageRankAlgorithm pagerank = new XPageRankAlgorithm();
 
-		builtGraph.addObjectsToGraph(FindingXFollowerAndXFollowing.outputFilePath, setType);
-		builtGraph.addObjectsToGraph(FindingTweet.outputFilePath, setType2);
+		builtGraph.addObjectsToGraph("FindingXFollowerAndXFollowing.json", setType);
+		builtGraph.addObjectsToGraph("FindingTweet.json", setType2);
 		pagerank.setGraph(builtGraph.getGraph());
 		Map<String, Double> result = pagerank.algorithmImplementation();
 		saveFile(result, "rank.json");
